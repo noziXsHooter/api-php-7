@@ -7,7 +7,7 @@ error_reporting(E_ERROR);
 define(HOST, 'localhost');
 define(USER, 'root');
 define(PASS, '');
-define(DB, 'teste');
+define(DB, 'api-php-7');
 define(PORT, 3306);
 
 define(DS, DIRECTORY_SEPARATOR);
