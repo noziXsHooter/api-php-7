@@ -2,14 +2,15 @@
 
 namespace Validator;
 
+use Repository\TokensAutorizadosRepository;
 use Util\ConstantesGenericasUtil;
 use Util\JsonUtil;
 
 class RequestValidator
 {
-    private string $request;
+    private $request;
     private array $dadosRequest = [];
-    private object $TokenAutorizationRepository;
+    private object $TokensAutorizadosRepository;
     
     const GET = 'GET';
     const DELETE = 'DELETE';
@@ -17,6 +18,7 @@ class RequestValidator
     public function __construct($request)
     {
        $this->request = $request;
+       $this->TokensAutorizadosRepository = new TokensAutorizadosRepository();
     }
 
     public function processRequest()
@@ -34,6 +36,8 @@ class RequestValidator
         {
             $this->dadosRequest = JsonUtil::tratarCorpoRequisicaoJson();
         }
+
+        $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
     }
 }
 

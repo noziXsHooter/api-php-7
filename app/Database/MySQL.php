@@ -26,7 +26,7 @@ class MySQL
     {
         try {
             return new PDO(
-                'mysql:host=' . HOST . '; dbname=' . BANCO . ';', USUARIO, SENHA
+                'mysql:host=' . HOST . '; dbname=' . DB . ';', USER, PASS
             );
         } catch (PDOException $exception) {
             throw new PDOException($exception->getMessage());
@@ -86,6 +86,7 @@ class MySQL
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $totalRegistros = $stmt->rowCount();
+            
             if ($totalRegistros === 1) {
                 return $stmt->fetch($this->db::FETCH_ASSOC);
             }

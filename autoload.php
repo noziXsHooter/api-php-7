@@ -1,6 +1,6 @@
 <?php
 /**
- * AUTOLOAD DE CLASSES PARA O PACOTE 'Classes'
+ * AUTOLOAD DE CLASSES PARA O PACOTE 'app'
  * @param $classe
  */
 function autoload($classe)
