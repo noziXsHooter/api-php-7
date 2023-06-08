@@ -38,6 +38,21 @@ class RequestValidator
         }
 
         $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
+        $metodo = $this->request['metodo'];
+/*         echo '<pre>';
+        var_dump($this->request); */
+
+        return $this->$metodo();
+
+    }
+
+    private function get() {
+        $retorno = utf8_encode(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
+        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_GET, false)) {
+           echo "existe";
+        }else{
+            echo "nao existe";
+        }
     }
 }
 

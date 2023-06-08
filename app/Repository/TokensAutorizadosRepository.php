@@ -25,7 +25,7 @@ class TokensAutorizadosRepository
      */
     public function validarToken($token)  
     {
-        $token = str_replace([' ','Bearer'], '', $token);
+/*         $token = str_replace([' ','Bearer'], '', $token);
         if(!$token)
         {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_VAZIO);
@@ -41,7 +41,7 @@ class TokensAutorizadosRepository
         {
             header('HTTP/1.1 401 Unauthorized');
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_NAO_AUTORIZADO);
-        }
+        } */
     }
     
     /**
