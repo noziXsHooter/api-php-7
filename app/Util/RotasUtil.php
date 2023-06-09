@@ -7,6 +7,7 @@ class RotasUtil
     public static function getRotas()
     {
         $urls = self::getUrls();
+        
         $request = [];
         $request['rota'] = strtoupper($urls[0]);
         $request['recurso'] = $urls[1] ?? null;

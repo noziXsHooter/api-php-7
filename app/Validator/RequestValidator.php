@@ -44,7 +44,6 @@ class RequestValidator
         $metodo = $this->request['metodo'];
 
         return $this->$metodo();
-
     }
 
     private function get() {

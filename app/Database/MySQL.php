@@ -1,6 +1,6 @@
 <?php
 
-namespace DataBase;
+namespace Database;
 
 use InvalidArgumentException;
 use PDO;
