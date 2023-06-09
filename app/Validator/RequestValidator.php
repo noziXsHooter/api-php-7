@@ -2,7 +2,9 @@
 
 namespace Validator;
 
+use InvalidArgumentException;
 use Repository\TokensAutorizadosRepository;
+use Service\UsuariosService;
 use Util\ConstantesGenericasUtil;
 use Util\JsonUtil;
 
@@ -14,6 +16,7 @@ class RequestValidator
     
     const GET = 'GET';
     const DELETE = 'DELETE';
+    const USUARIOS = 'USUARIOS';
     
     public function __construct($request)
     {
@@ -39,20 +42,29 @@ class RequestValidator
 
         $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
         $metodo = $this->request['metodo'];
-/*         echo '<pre>';
-        var_dump($this->request); */
 
         return $this->$metodo();
 
     }
 
     private function get() {
+
         $retorno = utf8_encode(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
-        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_GET, false)) {
-           echo "existe";
-        }else{
-            echo "nao existe";
+        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_GET, true)) {
+          
+            switch ($this->request['rota']) {
+                case self::USUARIOS:
+                    $UsuariosService = new UsuariosService($this->request);
+                    $retorno = $UsuariosService->validarGet();
+                    break;
+                
+                default:
+                    throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+                    break;
+            }
         }
+
+        return $retorno;
     }
 }
 
