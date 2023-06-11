@@ -65,5 +65,25 @@ class RequestValidator
 
         return $retorno;
     }
+
+    private function delete() {
+
+        $retorno = utf8_encode(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
+        if(in_array($this->request['rota'], ConstantesGenericasUtil::TIPO_GET, true)) {
+          
+            switch ($this->request['rota']) {
+                case self::USUARIOS:
+                    $UsuariosService = new UsuariosService($this->request);
+                    $retorno = $UsuariosService->validarDelete();
+                    break;
+                
+                default:
+                    throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+                    break;
+            }
+        }
+
+        return $retorno;
+    }
 }
 
