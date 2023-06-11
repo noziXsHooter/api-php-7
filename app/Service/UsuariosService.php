@@ -10,6 +10,7 @@ class UsuariosService {
 
     const TABELA = 'usuarios';
     const RECURSOS_GET = ['listar'];
+    const RECURSOS_DELETE = ['deletar'];
 
     private array $dados;
 
@@ -48,13 +49,40 @@ class UsuariosService {
         return $retorno;
     }
 
+    public function validarDelete()
+    {
+
+        $retorno = null;
+        $recurso = $this->dados['recurso'];
+
+        if(in_array($recurso, self::RECURSOS_DELETE, true)) {
+            if($this->dados['id'] > 0){
+                $retorno = $this->$recurso();
+            }else{
+                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
+            }
+        }else {
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+        }
+
+        if($retorno === null)
+        {
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
+        }
+    }
+
     public function getOneByKey()
     {
         return $this->UsuariosRepository->getMySQL()->getOneByKey(self::TABELA, $this->dados['id']);
     }
 
-    public function listar()
+    private function listar()
     {
         return $this->UsuariosRepository->getMySQL()->getAll(self::TABELA);
+    }
+
+    private function deletar()
+    {
+        return $this->UsuariosRepository->getMySQL()->delete(self::TABELA, $this->dados['id']);
     }
 }
