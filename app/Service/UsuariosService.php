@@ -79,7 +79,11 @@ class UsuariosService {
         $recurso = $this->dados['recurso'];
 
         if(in_array($recurso, self::RECURSOS_PUT, true)) {
-            $retorno = $this->dados['id'] > 0 ? $this->getOneByKey() : $this->$recurso();
+            if($this->dados['id'] > 0) {
+                $retorno = $this->$recurso();
+            }else{
+                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
+            }
         }else {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
@@ -88,7 +92,6 @@ class UsuariosService {
         {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
         }
-
         return $retorno;
     }
 
@@ -152,11 +155,9 @@ class UsuariosService {
             $this->UsuariosRepository->getMySQL()->getDb()->commit();
             return ConstantesGenericasUtil::MSG_ATUALIZADO_SUCESSO;
         }
-
         $this->UsuariosRepository->getMySQL()->getDb()->rollBack();
 
         throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_NAO_AFETADO);
-
     }
 
     private function deletar()
